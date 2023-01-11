@@ -17,7 +17,7 @@ class CharactersScreen extends StatefulWidget {
 }
 
 class _CharactersScreenState extends State<CharactersScreen> {
-  late List<Character> allCharacters;
+  List<Character> allCharacters = [];
 
   @override
   void initState() {
@@ -42,59 +42,40 @@ class _CharactersScreenState extends State<CharactersScreen> {
   Widget buildLoadedListWidgets() {
     return Container(
       color: MyColors.myGrey,
-      child: Column(
-        children: [
-          buildCharactersList(),
-        ],
-      ),
+      child: buildCharactersList(),
     );
   }
 
+  Widget buildCharactersList() {
+    return GridView.builder(
+        shrinkWrap: true,
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 200,
+            childAspectRatio: 3 / 2,
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 20),
+        itemCount: allCharacters.length,
+        itemBuilder: (BuildContext ctx, index) {
+          return Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  color: Colors.amber, borderRadius: BorderRadius.circular(15)),
+              child: CharacterItem(
+                character: allCharacters[index],
+              )
+
+              // Text(allCharacters[index].firstName.toString()),
+              );
+        });
+  }
+
   Widget showLoadingIndicator() {
-    return Center(
+    return const Center(
       child: CircularProgressIndicator(
         color: MyColors.myYellow,
       ),
     );
   }
-
-  Widget buildCharactersList() {
-    return ListView.builder(
-        shrinkWrap: true,
-        itemCount: allCharacters.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(allCharacters[index].fullName.toString()),
-          );
-        });
-  }
-
-  // Widget buildCharactersList() {
-  //   return GridView.builder(
-  //     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-  //       crossAxisCount: 2,
-  //       childAspectRatio: 2 / 3,
-  //       crossAxisSpacing: 1,
-  //       mainAxisSpacing: 1,
-  //     ),
-  //     shrinkWrap: true,
-  //     physics: const ClampingScrollPhysics(),
-  //     padding: EdgeInsets.zero,
-  //     // itemCount: _searchTextController.text.isEmpty
-  //     //     ? allCharacters.length
-  //     //     : searchedForCharacters.length,
-  //     itemBuilder: (ctx, index) {
-  //       return CharacterItem(
-  //         character: allCharacters[index],
-  //       );
-  //       // (
-  //       // character: _searchTextController.text.isEmpty
-  //       //     ? allCharacters[index]
-  //       //     : searchedForCharacters[index],
-  //       // );
-  //     },
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {

@@ -9,12 +9,11 @@ part 'characters_state.dart';
 
 class CharactersCubit extends Cubit<CharactersState> {
   final CharactersRepository charactersRepository;
+  List<Character> characters = [];
 
   CharactersCubit(
     this.charactersRepository,
   ) : super(CharactersInitial());
-
-  List<Character> characters = [];
 
   List<Character> GetAllCharacters() {
     charactersRepository.getAllCharacters().then((characters) {

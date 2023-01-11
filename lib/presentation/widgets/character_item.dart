@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../constants/my_colors.dart';
 import '../../constants/strings.dart';
@@ -18,16 +19,15 @@ class CharacterItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
       ),
       child: GridTile(
-        child: Container(
-          color: MyColors.myGrey,
-          child: character.image!.isNotEmpty
-              ? FadeInImage.assetNetwork(
-                  placeholder: "assets/images/loading.gif",
-                  image: character.image.toString(),
-                  fit: BoxFit.cover,
-                )
-              : CircularProgressIndicator(),
-        ),
+        // ignore: sort_child_properties_last
+        child: character.image!.isNotEmpty
+            ? FadeInImage.assetNetwork(
+                placeholder: "assets/images/loading.gif",
+                image: '${character.imageUrl}',
+                fit: BoxFit.cover,
+              )
+            : CircularProgressIndicator(),
+ 
         footer: Container(
           width: double.infinity,
           padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
