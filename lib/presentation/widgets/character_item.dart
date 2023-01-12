@@ -1,7 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import '../../constants/my_colors.dart';
-import '../../constants/strings.dart';
 import '../../data/models/characters.dart';
 
 class CharacterItem extends StatelessWidget {
@@ -27,7 +25,7 @@ class CharacterItem extends StatelessWidget {
                 fit: BoxFit.cover,
               )
             : CircularProgressIndicator(),
- 
+
         footer: Container(
           width: double.infinity,
           padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
