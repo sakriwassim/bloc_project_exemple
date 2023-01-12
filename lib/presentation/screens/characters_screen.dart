@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 
 import '../../data/models/characters.dart';
 import '../widgets/character_item.dart';
@@ -124,7 +125,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
         shrinkWrap: true,
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
             maxCrossAxisExtent: 200,
-            childAspectRatio: 3 / 2,
+            childAspectRatio: 1 / 2,
             crossAxisSpacing: 20,
             mainAxisSpacing: 20),
         itemCount: _searchTextController.text.isEmpty
@@ -157,6 +158,33 @@ class _CharactersScreenState extends State<CharactersScreen> {
     );
   }
 
+  Widget buildNoInternetWidget() {
+    return Center(
+      child: Container(
+        color: Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              'Can\'t connect .. check internet',
+              style: TextStyle(
+                fontSize: 22,
+                color: MyColors.myGrey,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Image.asset('assets/images/nointernet.gif')
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -171,7 +199,18 @@ class _CharactersScreenState extends State<CharactersScreen> {
               )
             : Container(),
       ),
-      body: buildBlockWidget(),
+      body: OfflineBuilder(
+          connectivityBuilder: (BuildContext context,
+              ConnectivityResult connectivity, Widget child) {
+            final bool connected = connectivity != ConnectivityResult.none;
+
+            if (connected) {
+              return buildBlockWidget();
+            } else {
+              return buildNoInternetWidget();
+            }
+          },
+          child: showLoadingIndicator()),
     );
   }
 }

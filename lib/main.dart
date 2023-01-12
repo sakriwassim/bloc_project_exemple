@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'app_router.dart';
 
-//Flutter BLoC in Arabic - #5 Dio & Repo.
 
+//Email : sakriwassim@gmail.com
+//linkdin : sakri wassim
 void main() {
   runApp(BreakingBadApp(appRouter: AppRouter(),));
 }
